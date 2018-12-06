@@ -40,40 +40,43 @@ import java.util.Map;
  */
 
 @Extension(
-        name = "sqs",
+        name = "SQS",
         namespace = "sink",
-        description = "SQS sink allows users to connect and publish messages to an AWS SQS Queue. It has the" +
-                " ability to only publish Text messages",
+        description = "The SQS sink allows users to connect and publish messages to an AWS SQS queue. This sink" +
+                " publishes messages only in the 'text' format.",
         parameters = {
                 @Parameter(
                         name = SQSConstants.QUEUE_URL_NAME,
-                        description = "Queue url which SQS Sink should connect to",
+                        description = "The URL of the queue to which the SQS Sink should connect.",
                         type = DataType.STRING
                 ),
                 @Parameter(
                         name = SQSConstants.ACCESS_KEY_NAME,
-                        description = "Access Key for the Amazon Web Services. (This is a mandatory field and should " +
-                                "be provided either in the deployment.yml or in the sink definition itself)",
+                        description = "The access key for the Amazon Web Services. It is required to specify an " +
+                                "access key either in the '<SP_HOME>/conf/<PROFILE>/deployment.yaml' file or in the" +
+                                " sink definition itself.",
                         type = DataType.STRING,
                         optional = true,
                         defaultValue = "none"
                 ),
                 @Parameter(
                         name = SQSConstants.SECRET_KEY_NAME,
-                        description = "Secret Key of the Amazon User. (This is a mandatory field and should " +
-                                "be provided either in the deployment.yml or in the sink definition itself)",
+                        description = "The secret key of the Amazon User. It is required to specify a secret key " +
+                                "either in the '<SP_HOME>/conf/<PROFILE>/deployment.yaml' file or in the sink " +
+                                "definition itself.",
                         type = DataType.STRING,
                         optional = true,
                         defaultValue = "none"
                 ),
                 @Parameter(
                         name = SQSConstants.REGION_NAME,
-                        description = "Amazon Web Service Region",
+                        description = "The region of the Amazon Web Service.",
                         type = DataType.STRING
                 ),
                 @Parameter(
                         name = SQSConstants.MESSAGE_GROUP_ID_NAME,
-                        description = "ID of the group that the message belong to(only applicable for FIFO Queues)",
+                        description = "The ID of the group to which the message belongs. This is only applicable for" +
+                                " FIFO queues)",
                         type = DataType.STRING,
                         optional = true,
                         dynamic = true,
@@ -81,8 +84,8 @@ import java.util.Map;
                 ),
                 @Parameter(
                         name = SQSConstants.DEDUPLICATION_ID_NAME,
-                        description = "ID by which a FIFO queue identifies the duplication in the queue(only " +
-                                "applicable for FIFO queues)",
+                        description = "The ID by which a FIFO queue identifies the duplication in the queue. This is" +
+                                " only applicable only for FIFO queues.)",
                         type = DataType.STRING,
                         optional = true,
                         dynamic = true,
@@ -90,8 +93,8 @@ import java.util.Map;
                 ),
                 @Parameter(
                         name = SQSConstants.DELAY_INTERVAL_NAME,
-                        description = "Time in seconds for how long the message remain in the queue until it is " +
-                                "available for the consumers to consume.",
+                        description = "The number of seconds the message remains in the queue before it is " +
+                                "available to the consumers.",
                         type = DataType.INT,
                         optional = true,
                         defaultValue = "" + SQSConstants.DEFAULT_DELAY_INTERVAL
@@ -108,8 +111,8 @@ import java.util.Map;
                                 "deduplication.id='{{deduplicationID}}'," +
                                 "message.group.id='charuka',@map(type='xml') )" +
                                 "define stream outStream(symbol string, deduplicationID string);",
-                        description = "Following Example shows how to define a SQS sink to publish messages to " +
-                                "the service"
+                        description = "This example shows how to define an SQS sink to publish messages to " +
+                                "the service."
                 )
         }
 )
