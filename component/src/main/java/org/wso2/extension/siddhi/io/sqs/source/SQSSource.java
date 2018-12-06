@@ -45,91 +45,95 @@ import java.util.concurrent.TimeUnit;
  */
 
 @Extension(
-        name = "sqs",
+        name = "SQS",
         namespace = "source",
-        description = "SQS source allows users to connect and consume messages from a AWS SQS Queue. It has the" +
-                " ability to receive Text messages",
+        description = "The SQS source allows users to connect and consume messages from an AWS SQS queue. The source " +
+                "receives messages in the 'text' format.",
         parameters = {
                 @Parameter(
                         name = SQSConstants.QUEUE_URL_NAME,
-                        description = "Queue name which SQS Source should subscribe to",
+                        description = "The URL of the queue to which the SQS source should subscribe.",
                         type = DataType.STRING
                 ),
                 @Parameter(
                         name = SQSConstants.ACCESS_KEY_NAME,
-                        description = "Access Key for the Amazon Web Services. (This is a mandatory field and should " +
-                                "be provided either in the deployment.yml or in the source definition itself)",
+                        description = "The access Key for the Amazon Web Services. It is required to specify an " +
+                                "access key either in the '<SP_HOME>/conf/<PROFILE>/deployment.yaml' file or in the" +
+                                " source definition itself.",
                         type = DataType.STRING,
                         optional = true,
                         defaultValue = "null"
                 ),
                 @Parameter(
                         name = SQSConstants.SECRET_KEY_NAME,
-                        description = "Secret Key of the Amazon User. (This is a mandatory field and should " +
-                                "be provided either in the deployment.yml or in the source definition itself)",
+                        description = "The secret Key of the Amazon User. It is required to specify a secret key " +
+                                "either in the '<SP_HOME>/conf/<PROFILE>/deployment.yaml' file or in the source " +
+                                "definition itself.",
                         type = DataType.STRING,
                         optional = true,
                         defaultValue = "null"
                 ),
                 @Parameter(
                         name = SQSConstants.REGION_NAME,
-                        description = "Amazon Web Service Region",
+                        description = "The region of the Amazon Web Service.",
                         type = DataType.STRING
                 ),
                 @Parameter(
                         name = SQSConstants.POLLING_INTERVAL_NAME,
-                        description = "Interval (in milliseconds) between two message retrieval operations",
+                        description = "The number of milliseconds between the retrieval of two messages from a queue.",
                         type = DataType.INT
                 ),
                 @Parameter(
                         name = SQSConstants.WAIT_TIME_NAME,
-                        description = "Maximum amount (in seconds) that a polling call will wait for a message to " +
-                                "become available in the queue",
+                        description = "The maximum number of seconds that a polling call will wait for a message to " +
+                                "become available in the queue.",
                         type = DataType.INT,
                         optional = true,
                         defaultValue = "" + SQSConstants.DEFAULT_WAITING_TIME
                 ),
                 @Parameter(
                         name = SQSConstants.MAX_NUMBER_OF_MESSAGES_NAME,
-                        description = "Maximum number of messages retrieved from the queue per polling call " +
-                                "(Actual maybe smaller than this even if there's more messages in the queue)",
+                        description = "The maximum number of messages retrieved from the queue per polling call " +
+                                "This value might be smaller than the number of messages available in the queue.",
                         type = DataType.INT,
                         defaultValue = "" + SQSConstants.DEFAULT_MAX_NUMBER_OF_MESSAGES
                 ),
                 @Parameter(
                         name = SQSConstants.VISIBILITY_TIMEOUT_NAME,
-                        description = "The length of time (in seconds) for which a message received from a queue" +
-                                " will be invisible to other consumers(only applicable if consumer doesn't purge the" +
-                                " received messages from the queue).",
+                        description = "The duration in seconds after which a message received from a queue" +
+                                " becomes invisible to other consumers. This is applicable only if the consumer " +
+                                "does not purge the received messages from the queue in advance.",
                         type = DataType.INT,
                         optional = true,
                         defaultValue = "" + SQSConstants.DEFAULT_VISIBILITY_TIMEOUT
                 ),
                 @Parameter(
                         name = SQSConstants.DELETE_MESSAGES_NAME,
-                        description = "Should the message be deleted from the queue after consuming it.",
+                        description = "This decides whether the messages should be deleted from the queue " +
+                                "after the user has consumed it.",
                         type = DataType.BOOL,
                         optional = true,
                         defaultValue = "" + SQSConstants.DELETE_MESSAGES_NAME
                 ),
                 @Parameter(
                         name = SQSConstants.DELETE_RETRY_INTERVAL_NAME,
-                        description = "Time interval (in milliseconds) consumer should retry to delete a message in" +
-                                " the case of failure during a message delete operation.",
+                        description = "The duration in seconds within which the consumer can retry to delete a " +
+                                "message in case a previous attempt to delete the message fails.",
                         type = DataType.INT,
                         optional = true,
                         defaultValue = "" + SQSConstants.DEFAULT_RETRY_INTERVAL
                 ),
                 @Parameter(
                         name = SQSConstants.MAX_NUMBER_OF_DELETE_RETRY_ATTEMPTS_NAME,
-                        description = "Maximum number retry attempts to be performed in case of a failure.",
+                        description = "The maximum number of retry attempts possible in case the user fails to " +
+                                "delete the message.",
                         type = DataType.INT,
                         optional = true,
                         defaultValue = "" + SQSConstants.DEFAULT_RETRY_COUNT_LIMIT
                 ),
                 @Parameter(
                         name = SQSConstants.PARALLEL_CONSUMERS_NAME,
-                        description = "Size of the thread pool that should be used for polling.",
+                        description = "The size of the thread pool that should be used for polling.",
                         type = DataType.INT,
                         defaultValue = "" + SQSConstants.DEFAULT_PARALLEL_CONSUMERS
                 )
@@ -152,8 +156,8 @@ import java.util.concurrent.TimeUnit;
                                 "@map(type='xml',enclosing.element=\"//events\"," +
                                 "@attributes(symbol='symbol', message_id='trp:MESSAGE_ID') ))" +
                                 "define stream inStream (symbol string, message_id string);",
-                        description = "Following Example shows how to define a SQS source to receive messages from " +
-                                "the service"
+                        description = "The example specified above shows how to define an SQS source to receive " +
+                                "messages from the service."
                 )
         }
 )
